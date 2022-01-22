@@ -34,3 +34,13 @@ variable "variables" {
   type        = map(string)
   description = "The environment variables made available to the fucntion"
 }
+
+variable "s3_bucket_arn" {
+  type        = string
+  description = "The ARN of S3 bucket triggerign the lambda"
+}
+
+variable "s3_bucket_id" {
+  type        = string
+  description = "The ID of S3 bucket triggerign the lambda"
+}

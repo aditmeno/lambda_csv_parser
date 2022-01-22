@@ -5,7 +5,7 @@ variable "bucket_name" {
 
 variable "acl_type" {
   type        = string
-  description = "The acl type of the S3 bucket" #
+  description = "The acl type of the S3 bucket"
   default     = "private"
 }
 
@@ -39,3 +39,7 @@ variable "additional_bucket_tags" {
   default     = {}
 }
 
+variable "lambda_execution_role" {
+  type        = string
+  description = "The IAM role lambda uses to access the bucket"
+}

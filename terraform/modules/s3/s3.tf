@@ -20,3 +20,30 @@ resource "aws_s3_bucket_public_access_block" "bucket_private_acl" {
   ignore_public_acls      = var.ignore_public_acls
   restrict_public_buckets = var.restrict_public_buckets
 }
+
+data "aws_iam_policy_document" "allow_lambda_access" {
+  statement {
+    sid = "0"
+    principals {
+      type = "AWS"
+      identifiers = [
+        var.lambda_execution_role
+      ]
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ]
+
+    resources = [
+      aws_s3_bucket.bucket.arn,
+      "${aws_s3_bucket.bucket.arn}/*",
+    ]
+  }
+}
+
+resource "aws_s3_bucket_policy" "allow_lambda_access" {
+  bucket = aws_s3_bucket.bucket.id
+  policy = data.aws_iam_policy_document.allow_lambda_access.json
+}

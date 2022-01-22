@@ -8,6 +8,8 @@ s3 = boto3.client("s3")
 dynamodbdb = boto3.client("dynamodb", region_name=os.environ.get("AWS_REGION"))
 
 def handler(event, context):
+    statusCode = 200
+    statusMessage = "Successfully inserted data"
     bucket = event["Records"][0]["s3"]["bucket"]["name"]
     key = urllib.parse.unquote_plus(event["Records"][0]["s3"]["object"]["key"], encoding="utf-8")
     try:
@@ -34,8 +36,10 @@ def handler(event, context):
             print(response)
     except Exception as e:
         print(str(e))
+        statusCode = 500
+        statusMessage = f"Error occured parsing file {bucket}/{key}"
 
     return {
-        "statusCode": 200,
-        "body": "Successfully inserted data"
+        'statusCode': statusCode,
+        'body': json.dumps(statusMessage)
     }

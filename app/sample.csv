@@ -1,0 +1,6 @@
+deviceID, deviceName, Status
+01, sensor1,ACTIVE
+02, sensor2, INACTIVE
+03, sensor3, ACTIVE
+04, sensor4, ACTIVE
+05, sensor5, INACTIVE
